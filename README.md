@@ -30,7 +30,7 @@ alsa-utils
 1. **Clone the Repository**
 
 ```zsh
-    git clone xxxxxxx
+    git clone https://github.com/carter4299/mac_keys.git
 ```
 
 2. **Run the Startup Script**
