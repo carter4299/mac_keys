@@ -1,7 +1,6 @@
 #!/bin/sh
 mkdir -p ~/.mac_keys
 mkdir -p ~/Pictures/Screenshots
-# Dependecies and sys files
 acpi_output=$(ls /sys/class/backlight/)
 
 if [ -z "$acpi_output" ]; then
@@ -9,8 +8,8 @@ if [ -z "$acpi_output" ]; then
     exit 1
 fi
 echo "Detected backlight interface: $acpi_output. Inserting into package... "
-sed -i "s|char file_location[256] = \"/sys/class/backlight/acpi_video0/brightness\";|char file_location[256] = \"/sys/class/backlight/$acpi_output/brightness\";|" ./source/increase_brightness.c
-sed -i "s|char file_location[256] = \"/sys/class/backlight/acpi_video0/brightness\";|char file_location[256] = \"/sys/class/backlight/$acpi_output/brightness\";|" ./source/decrease_brightness.c
+sed -i "s|char file_location[256] = \"/sys/class/backlight/acpi_video0/brightness\";|char file_location[256] = \"/sys/class/backlight/$acpi_output/brightness\";|" ./increase_brightness.c
+sed -i "s|char file_location[256] = \"/sys/class/backlight/acpi_video0/brightness\";|char file_location[256] = \"/sys/class/backlight/$acpi_output/brightness\";|" ./decrease_brightness.c
 
 # Check for pulseaudio
 if which pulseaudio >/dev/null; then
@@ -39,35 +38,35 @@ fi
 # Step 1: Compile
 if command -v gcc > /dev/null 2>&1; then
     echo "Compiling the brightness adjustment programs..."
-    if gcc ./source/increase_brightness.c -o ~/.mac_keys/increase_brightness; then
+    if gcc ./increase_brightness.c -o ~/.mac_keys/increase_brightness; then
         echo "increase_brightness compiled successfully... "
     else
         echo "Error compiling increase_brightness. Exiting... "
         exit 1
     fi
     echo "Compiling the brightness adjustment programs..."
-    if gcc ./source/decrease_brightness.c -o ~/.mac_keys/decrease_brightness; then
+    if gcc ./decrease_brightness.c -o ~/.mac_keys/decrease_brightness; then
         echo "decrease_brightness compiled successfully... "
     else
         echo "Error compiling decrease_brightness. Exiting... "
         exit 1
     fi
     echo "Compiling the brightness adjustment programs..."
-    if gcc ./source/increase_keyboard_brightness.c -o ~/.mac_keys/increase_keyboard_brightness; then
+    if gcc ./increase_keyboard_brightness.c -o ~/.mac_keys/increase_keyboard_brightness; then
         echo "increase_keyboard_brightness compiled successfully... "
     else
         echo "Error compiling increase_keyboard_brightness. Exiting... "
         exit 1
     fi
     echo "Compiling the brightness adjustment programs..."
-    if gcc ./source/decrease_keyboard_brightness.c -o ~/.mac_keys/decrease_keyboard_brightness; then
+    if gcc ./decrease_keyboard_brightness.c -o ~/.mac_keys/decrease_keyboard_brightness; then
         echo "decrease_keyboard_brightness compiled successfully... "
     else
         echo "Error compiling decrease_keyboard_brightness. Exiting... "
         exit 1
     fi
     echo "Compiling the brightness adjustment programs..."
-    if gcc ./source/volume_control.c -o ~/.mac_keys/volume_control; then
+    if gcc ./volume_control.c -o ~/.mac_keys/volume_control; then
         echo "volume_control compiled successfully... "
     else
         echo "Error compiling volume_control. Exiting... "
